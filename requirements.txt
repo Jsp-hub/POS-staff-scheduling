@@ -4,4 +4,4 @@ pandas
 numpy
 joblib
 requests
-pip install -r requirements.txt && python create_staff_db.py
+
