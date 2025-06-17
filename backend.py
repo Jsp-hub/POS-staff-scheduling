@@ -18,7 +18,7 @@ weather_encoder = joblib.load("Encoders/weather_encoder.joblib")
 
 # Ensure the feature columns match model input format
 def get_features_for_datetime(date_str, hour_str):
-    row = features_df[(features_df["date"] == date_str) & (features_df["hour"].astype(str) == hour_str)]
+    row = features_df[(features_df["Timestamp"] == date_str) & (features_df["Hour"].astype(str) == hour_str)]
     if row.empty:
         return None
 
