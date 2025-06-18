@@ -11,6 +11,9 @@ app = Flask(__name__)
 # Load features from CSV
 features_df = pd.read_csv("Data/Calender testing data.csv")  # Moved to data/ folder
 
+# Convert the Timestamp column to datetime objects (only ONCE here)
+features_df["Timestamp"] = pd.to_datetime(features_df["Timestamp"])
+
 # Load trained ML model and encoders
 model = joblib.load("Model/xgboost_model.joblib")
 special_event_encoder = joblib.load("Encoders/special_event_encoder.joblib")
@@ -21,7 +24,8 @@ def get_features_for_datetime(date_str, hour_str):
     #row = features_df[(features_df["Timestamp"] == date_str) & (features_df["Hour"].astype(str) == hour_str)]
     # Convert '2025-06-18' and '9' → '6/18/2025 9:00'
     date_obj = datetime.strptime(date_str, "%Y-%m-%d")
-    formatted_timestamp = f"{date_obj.month}/{date_obj.day}/{date_obj.year} {int(hour_str)}:00"
+    formatted_timestamp = datetime(date_obj.year, date_obj.month, date_obj.day, int(hour_str))
+    #formatted_timestamp = f"{date_obj.month}/{date_obj.day}/{date_obj.year} {int(hour_str)}:00"
 
     row = features_df[(features_df["Timestamp"] == formatted_timestamp)]
     
