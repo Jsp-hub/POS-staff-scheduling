@@ -44,13 +44,17 @@ def get_features_for_datetime(date_str, hour_str):
         encoded_weather = weather_encoder.transform([[row["Weather"]]])[0][0]
         row["Weather_Encoded"] = encoded_weather
         row.drop(labels=["Weather"], inplace=True)
-        
+
     # Drop non-feature columns
     row = row.drop(labels=["Timestamp", "Weekday"])
     return row.to_dict()
 
 def predict_covers(features):
     input_df = pd.DataFrame([features])
+
+    #Ensure exact column order
+    input_df = input_df[["Hour", "Is_Weekend", "Weather_Encoded", "Special_Event_Encoded"]]
+    
     return int(model.predict(input_df)[0])
 
 def calculate_staff(covers):
