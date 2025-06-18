@@ -36,9 +36,9 @@ def get_features_for_datetime(date_str, hour_str):
 
     # Encode categorical features using saved encoders
     if "Special_Event" in row:
-        row["Special_Event"] = special_event_encoder.transform([row["Special_Event"]])[0]
+        row["Special_Event"] = special_event_encoder.transform([[row["Special_Event"]]])[0][0]
     if "Weather" in row:
-        row["Weather"] = weather_encoder.transform([row["Weather"]])[0]
+        row["Weather"] = weather_encoder.transform([[row["Weather"]]])[0][0]
 
     # Drop non-feature columns
     row = row.drop(labels=["Timestamp", "Weekday"])
