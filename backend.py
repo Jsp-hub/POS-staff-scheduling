@@ -37,7 +37,7 @@ def get_features_for_datetime(date_str, hour_str):
         row["Weather"] = weather_encoder.transform([row["Weather"]])[0]
 
     # Drop non-feature columns
-    row = row.drop(labels=["Timestamp"])
+    row = row.drop(labels=["Timestamp", "Weekday"])
     return row.to_dict()
 
 def predict_covers(features):
